@@ -300,6 +300,11 @@
         var isTimerRunning = false;
         var songList = [];
 
+        document.addEventListener("DOMContentLoaded", function() {
+            loadState();
+            renderSongList();
+        });
+
         function toggleMissionImage() {
             var missionImage = document.querySelector('.top-left');
             if (missionImage.style.display === 'none') {
@@ -350,6 +355,7 @@
             if (timerTime > 0) {
                 timerTime--;
                 updateTimerDisplay();
+                saveState();
             } else {
                 stopTimer();
                 hideTimer();
@@ -378,6 +384,7 @@
             document.getElementById('pauseResumeBtn').classList.add('pause-button');
             document.getElementById('pauseResumeBtn').classList.remove('resume-button');
             document.getElementById('pauseResumeBtn').innerText = '중지';
+            saveState();
         }
 
         function pauseOrResumeTimer() {
@@ -392,12 +399,14 @@
                 document.getElementById('pauseResumeBtn').classList.remove('resume-button');
                 document.getElementById('pauseResumeBtn').innerText = '중지';
             }
+            saveState();
         }
 
         function hideTimer() {
             stopTimer();
             document.getElementById('timerModal').style.display = 'none';
             document.getElementById('pauseResumeBtn').style.display = 'none';
+            saveState();
         }
 
         function showInputModal() {
@@ -426,6 +435,7 @@
 
             songList.push({ artist, title });
             renderSongList();
+            saveState();
         }
 
         function renderSongList() {
@@ -452,22 +462,61 @@
             if (newValue) {
                 songList[index][field] = newValue;
                 renderSongList();
+                saveState();
             }
         }
 
         function deleteSong(index) {
             songList.splice(index, 1);
             renderSongList();
+            saveState();
         }
 
         function clearSongList() {
             songList = [];
             renderSongList();
+            saveState();
         }
 
         function handleEnterKey(event) {
             if (event.key === 'Enter') {
                 addSong();
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('songList', JSON.stringify(songList));
+            localStorage.setItem('timerTime', timerTime);
+            localStorage.setItem('isTimerRunning', isTimerRunning);
+        }
+
+        function loadState() {
+            const savedSongList = localStorage.getItem('songList');
+            const savedTimerTime = localStorage.getItem('timerTime');
+            const savedIsTimerRunning = localStorage.getItem('isTimerRunning');
+
+            if (savedSongList) {
+                songList = JSON.parse(savedSongList);
+            }
+
+            if (savedTimerTime) {
+                timerTime = parseInt(savedTimerTime, 10);
+                if (timerTime > 0) {
+                    document.getElementById('timerModal').style.display = 'block';
+                    document.getElementById('pauseResumeBtn').style.display = 'inline-block';
+                    updateTimerDisplay();
+                }
+            }
+
+            if (savedIsTimerRunning === 'true') {
+                startTimer();
+                document.getElementById('pauseResumeBtn').classList.add('pause-button');
+                document.getElementById('pauseResumeBtn').classList.remove('resume-button');
+                document.getElementById('pauseResumeBtn').innerText = '중지';
+            } else {
+                document.getElementById('pauseResumeBtn').classList.remove('pause-button');
+                document.getElementById('pauseResumeBtn').classList.add('resume-button');
+                document.getElementById('pauseResumeBtn').innerText = '다시';
             }
         }
     </script>
