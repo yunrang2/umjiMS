@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노래신청 모달창</title>
+    <style>
+        @font-face {
+            font-family: 'DNFBitBitv2';
+            src: url('https://raw.githubusercontent.com/yunrang2/upload/master/DNFBitBitv2.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #00FF00; /* 밝은 녹색 배경 */
+            font-family: 'DNFBitBitv2', sans-serif;
+            position: relative;
+        }
+
+        .container {
+            width: 1920px;
+            height: 1080px;
+            background-color: #00FF00; /* 밝은 녹색 배경 */
+            position: relative;
+        }
+
+        .top-left {
+            position: absolute;
+            top: 100px; /* 이미지 아래로 내리기 */
+            left: 0;
+            width: 400px; /* 가로 크기 조정 */
+            display: none; /* 처음에는 숨김 */
+            transition: opacity 0.3s ease; /* 부드러운 전환 효과 */
+        }
+
+        .bottom-left {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 400px; /* 가로 크기 조정 */
+            cursor: pointer; /* 커서를 포인터로 변경 */
+            transition: transform 0.3s ease; /* 부드러운 전환 효과 */
+        }
+
+        .bottom-left:hover {
+            transform: scale(1.1); /* 호버 시 확대 효과 */
+        }
+
+        .buttons {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column-reverse; /* 밑에서부터 정렬 */
+            align-items: flex-end; /* 오른쪽 정렬 */
+            gap: 10px; /* 버튼 사이 간격 */
+        }
+
+        .button {
+            width: 100px; /* 초기 너비 */
+            height: 50px;
+            background-color: #007BFF; /* 파란색 버튼 */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-family: 'DNFBitBitv2', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: width 0.3s ease;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button:hover {
+            width: 200px; /* 호버 시 늘어나는 너비 */
+        }
+
+        .modal {
+            display: none; /* 처음에는 숨김 */
+            position: absolute;
+            background-color: #fefefe;
+            border: 1px solid #888;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-family: 'DNFBitBitv2', sans-serif;
+        }
+
+        .modal-header .title {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .modal-header .button {
+            width: auto;
+            height: auto;
+            padding: 5px 10px;
+            font-size: 14px;
+            margin-left: 10px;
+            font-family: 'DNFBitBitv2', sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th, td {
+            padding: 5px;
+            color: black;
+            border: 1px solid #888;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .table-row {
+            position: relative;
+        }
+
+        .delete-button {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #FF0000; /* 빨간색 */
+            color: white;
+            border: none;
+            padding: 2px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'DNFBitBitv2', sans-serif;
+            display: none;
+        }
+
+        .table-row:hover .delete-button {
+            display: inline-block;
+        }
+
+        .clear-button {
+            background-color: #FF0000; /* 빨간색 */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'DNFBitBitv2', sans-serif;
+        }
+
+        .add-button {
+            background-color: #007BFF; /* 파란색 */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'DNFBitBitv2', sans-serif;
+        }
+
+        .input-modal {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background-color: #fefefe;
+            border: 1px solid #888;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .input-modal input {
+            width: 90%;
+            padding: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-family: 'DNFBitBitv2', sans-serif;
+        }
+
+        .input-modal .button {
+            width: auto;
+            height: auto;
+            padding: 5px 10px;
+            font-size: 14px;
+            margin: 5px;
+            font-family: 'DNFBitBitv2', sans-serif;
+        }
+
+        .input-modal .instructions {
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-family: 'DNFBitBitv2', sans-serif;
+        }
+
+        .input-modal .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .timer-modal {
+            display: none;
+            position: absolute;
+            top: 50px; /* 상단에서 50px 떨어짐 */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            background-color: #fff;
+            border: 2px solid #888;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            z-index: 3;
+            text-align: center;
+            font-size: 24px;
+            font-family: 'DNFBitBitv2', sans-serif;
+            animation: pulse 1s infinite; /* 크기 변화 애니메이션 */
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.1);
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        .button-bg-music {
+            width: 90px; /* 버튼 너비 줄임 */
+            padding: 5px;
+            margin: 5px 0;
+            font-family: 'DNFBitBitv2', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            display: block;
+        }
+
+        .button-bg-music:hover {
+            background-color: #0056b3;
+        }
+
+        .stop-button {
+            width: 90px;
+            padding: 5px;
+            margin: 5px 0;
+            font-family: 'DNFBitBitv2', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #FF0000; /* 빨간색 */
+            color: white;
+        }
+
+        .pause-button {
+            background-color: #FF0000; /* 빨간색 */
+        }
+
+        .resume-button {
+            background-color: #007BFF; /* 파란색 */
+        }
+    </style>
+    <script>
+        var currentAudio = null;
+        var timerInterval = null;
+        var timerTime = 0;
+        var isTimerRunning = false;
+        var songList = [];
+
+        function toggleMissionImage() {
+            var missionImage = document.querySelector('.top-left');
+            if (missionImage.style.display === 'none') {
+                missionImage.style.display = 'block';
+            } else {
+                missionImage.style.display = 'none';
+            }
+        }
+
+        function showModal(id) {
+            var modal = document.getElementById(id);
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+            }
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function playAudio(url) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            currentAudio = new Audio(url);
+            currentAudio.play();
+        }
+
+        function stopAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                currentAudio = null;
+            }
+        }
+
+        function startTimer() {
+            if (!isTimerRunning) {
+                isTimerRunning = true;
+                timerInterval = setInterval(decrementTimer, 1000);
+            }
+        }
+
+        function decrementTimer() {
+            if (timerTime > 0) {
+                timerTime--;
+                updateTimerDisplay();
+            } else {
+                stopTimer();
+                hideTimer();
+            }
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById('timerDisplay').innerText = timerTime + " 초";
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+        }
+
+        function addTime() {
+            if (isTimerRunning) {
+                timerTime += 30;
+            } else {
+                timerTime = 30;
+                startTimer();
+            }
+            updateTimerDisplay();
+            document.getElementById('timerModal').style.display = 'block';
+            document.getElementById('pauseResumeBtn').style.display = 'inline-block';
+            document.getElementById('pauseResumeBtn').classList.add('pause-button');
+            document.getElementById('pauseResumeBtn').classList.remove('resume-button');
+            document.getElementById('pauseResumeBtn').innerText = '중지';
+        }
+
+        function pauseOrResumeTimer() {
+            if (isTimerRunning) {
+                stopTimer();
+                document.getElementById('pauseResumeBtn').classList.remove('pause-button');
+                document.getElementById('pauseResumeBtn').classList.add('resume-button');
+                document.getElementById('pauseResumeBtn').innerText = '다시';
+            } else {
+                startTimer();
+                document.getElementById('pauseResumeBtn').classList.add('pause-button');
+                document.getElementById('pauseResumeBtn').classList.remove('resume-button');
+                document.getElementById('pauseResumeBtn').innerText = '중지';
+            }
+        }
+
+        function hideTimer() {
+            stopTimer();
+            document.getElementById('timerModal').style.display = 'none';
+            document.getElementById('pauseResumeBtn').style.display = 'none';
+        }
+
+        function showInputModal() {
+            showModal('inputModal');
+        }
+
+        function addSong() {
+            var input = document.getElementById('songInput').value;
+            closeModal('inputModal');
+            if (!input) return;
+
+            var artist, title;
+
+            if (input.includes("-")) {
+                [artist, title] = input.split("-").map(item => item.trim());
+            } else if (input.includes("의")) {
+                [artist, title] = input.split("의").map(item => item.trim().replace(/^'|'$/g, ""));
+            } else {
+                alert("올바른 형식으로 입력하세요.");
+                return;
+            }
+
+            if (songList.length >= 5) {
+                songList.shift();
+            }
+
+            songList.push({ artist, title });
+            renderSongList();
+        }
+
+        function renderSongList() {
+            var table = document.querySelector("#songList tbody");
+            table.innerHTML = "";
+
+            songList.forEach((song, index) => {
+                var row = document.createElement("tr");
+                row.classList.add("table-row");
+
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td ondblclick="editSong(${index}, 'artist')">${song.artist}</td>
+                    <td ondblclick="editSong(${index}, 'title')">${song.title}</td>
+                    <td><button class="delete-button" onclick="deleteSong(${index})">삭제</button></td>
+                `;
+
+                table.appendChild(row);
+            });
+        }
+
+        function editSong(index, field) {
+            var newValue = prompt("새로운 값을 입력하세요:", songList[index][field]);
+            if (newValue) {
+                songList[index][field] = newValue;
+                renderSongList();
+            }
+        }
+
+        function deleteSong(index) {
+            songList.splice(index, 1);
+            renderSongList();
+        }
+
+        function clearSongList() {
+            songList = [];
+            renderSongList();
+        }
+
+        function handleEnterKey(event) {
+            if (event.key === 'Enter') {
+                addSong();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img src="https://raw.githubusercontent.com/yunrang2/upload/master/엄지님 미션판.png" alt="Top Left Image" class="top-left">
+        <img src="https://raw.githubusercontent.com/yunrang2/upload/master/엄지배너.gif" alt="Bottom Left Image" class="bottom-left" onclick="toggleMissionImage()">
+        <div class="buttons">
+            <div class="timer-buttons">
+                <button id="pauseResumeBtn" class="button pause-button" onclick="pauseOrResumeTimer()" style="display: none;">중지</button>
+                <button class="button" onclick="addTime()">타이머</button>
+            </div>
+            <button class="button" onclick="showModal('bgMusicModal')">브금</button>
+            <button class="button" onclick="showModal('songRequestModal')">노래신청</button>
+        </div>
+    </div>
+
+    <!-- 브금 모달 창 -->
+    <div id="bgMusicModal" class="modal" style="left: auto; right: 120px; top: auto; bottom: 50px;">
+        <span class="close" onclick="closeModal('bgMusicModal')">&times;</span>
+        <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/섹시.mp3')">섹시</button>
+        <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/불쌍.mp3')">불쌍</button>
+        <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/멸망.mp3')">멸망</button>
+        <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/게임.mp3')">게임</button>
+        <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/황당.mp3')">황당</button>
+        <button class="stop-button" onclick="stopAudio()">중지</button>
+    </div>
+
+    <!-- 노래 신청 모달 창 -->
+    <div id="songRequestModal" class="modal" style="right: 0; top: 0; width: 400px;">
+        <div class="modal-header">
+            <button class="clear-button" onclick="clearSongList()">클리어</button>
+            <span class="title">신청리스트</span>
+            <button class="add-button" onclick="showInputModal()">추가</button>
+        </div>
+        <table id="songList">
+            <thead>
+                <tr>
+                    <th>순서</th>
+                    <th>가수</th>
+                    <th>제목</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 노래 리스트가 여기에 표시됨 -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 노래 입력 모달 창 -->
+    <div id="inputModal" class="input-modal">
+        <div class="instructions">입력 형식: 가수 - 제목 또는 '가수'의 '제목'</div>
+        <input type="text" id="songInput" placeholder="가수 - 제목 또는 '가수'의 '제목'" onkeypress="handleEnterKey(event)">
+        <div class="button-container">
+            <button class="button" onclick="addSong()">확인</button>
+            <button class="button" onclick="closeModal('inputModal')">취소</button>
+        </div>
+    </div>
+
+    <!-- 타이머 모달 -->
+    <div id="timerModal" class="timer-modal" onclick="hideTimer()">
+        <div id="timerDisplay">30 초</div>
+    </div>
+</body>
+</html>
