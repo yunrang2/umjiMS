@@ -59,18 +59,18 @@
             display: flex;
             flex-direction: column-reverse; /* 밑에서부터 정렬 */
             align-items: flex-end; /* 오른쪽 정렬 */
-            gap: 10px; /* 버튼 사이 간격 */
+            gap: 20px; /* 버튼 사이 간격 */
         }
 
         .button {
-            width: 100px; /* 초기 너비 */
-            height: 50px;
+            width: 150px; /* 초기 너비 */
+            height: 70px; /* 높이 증가 */
             background-color: #007BFF; /* 파란색 버튼 */
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px; /* 모서리 둥글게 */
             font-family: 'DNFBitBitv2', sans-serif;
-            font-size: 16px;
+            font-size: 20px; /* 글자 크기 증가 */
             cursor: pointer;
             transition: width 0.3s ease;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -79,15 +79,15 @@
         }
 
         .button:hover {
-            width: 200px; /* 호버 시 늘어나는 너비 */
+            width: 250px; /* 호버 시 늘어나는 너비 */
         }
 
         .modal {
             display: none; /* 처음에는 숨김 */
             position: absolute;
             background-color: #fefefe;
-            border: 1px solid #888;
-            padding: 10px;
+            border: 2px solid #888;
+            padding: 20px; /* 패딩 증가 */
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
             z-index: 1;
@@ -97,8 +97,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
-            margin-bottom: 10px;
+            font-size: 24px; /* 글자 크기 증가 */
+            margin-bottom: 20px; /* 간격 증가 */
             font-family: 'DNFBitBitv2', sans-serif;
         }
 
@@ -110,8 +110,8 @@
         .modal-header .button {
             width: auto;
             height: auto;
-            padding: 5px 10px;
-            font-size: 14px;
+            padding: 10px 20px; /* 패딩 증가 */
+            font-size: 18px; /* 글자 크기 증가 */
             margin-left: 10px;
             font-family: 'DNFBitBitv2', sans-serif;
         }
@@ -123,9 +123,10 @@
         }
 
         th, td {
-            padding: 5px;
+            padding: 15px; /* 패딩 증가 */
             color: black;
             border: 1px solid #888;
+            font-size: 18px; /* 글자 크기 증가 */
         }
 
         th {
@@ -145,10 +146,10 @@
             background-color: #FF0000; /* 빨간색 */
             color: white;
             border: none;
-            padding: 2px 5px;
+            padding: 5px 10px; /* 패딩 증가 */
             border-radius: 5px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 16px; /* 글자 크기 증가 */
             font-family: 'DNFBitBitv2', sans-serif;
             display: none;
         }
@@ -161,10 +162,10 @@
             background-color: #FF0000; /* 빨간색 */
             color: white;
             border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
+            padding: 10px 20px; /* 패딩 증가 */
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 18px; /* 글자 크기 증가 */
             font-family: 'DNFBitBitv2', sans-serif;
         }
 
@@ -172,10 +173,10 @@
             background-color: #007BFF; /* 파란색 */
             color: white;
             border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
+            padding: 10px 20px; /* 패딩 증가 */
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 18px; /* 글자 크기 증가 */
             font-family: 'DNFBitBitv2', sans-serif;
         }
 
@@ -185,10 +186,10 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 300px;
+            width: 400px; /* 너비 증가 */
             background-color: #fefefe;
-            border: 1px solid #888;
-            padding: 10px;
+            border: 2px solid #888;
+            padding: 20px; /* 패딩 증가 */
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
             z-index: 2;
@@ -196,24 +197,24 @@
 
         .input-modal input {
             width: 90%;
-            padding: 5px;
-            margin-bottom: 10px;
-            font-size: 14px;
+            padding: 10px; /* 패딩 증가 */
+            margin-bottom: 20px; /* 간격 증가 */
+            font-size: 18px; /* 글자 크기 증가 */
             font-family: 'DNFBitBitv2', sans-serif;
         }
 
         .input-modal .button {
             width: auto;
             height: auto;
-            padding: 5px 10px;
-            font-size: 14px;
+            padding: 10px 20px; /* 패딩 증가 */
+            font-size: 18px; /* 글자 크기 증가 */
             margin: 5px;
             font-family: 'DNFBitBitv2', sans-serif;
         }
 
         .input-modal .instructions {
-            font-size: 14px;
-            margin-bottom: 10px;
+            font-size: 18px; /* 글자 크기 증가 */
+            margin-bottom: 20px; /* 간격 증가 */
             text-align: center;
             font-family: 'DNFBitBitv2', sans-serif;
         }
@@ -229,15 +230,15 @@
             top: 50px; /* 상단에서 50px 떨어짐 */
             left: 50%;
             transform: translateX(-50%);
-            width: 150px;
+            width: 200px; /* 너비 증가 */
             background-color: #fff;
             border: 2px solid #888;
-            padding: 20px;
+            padding: 30px; /* 패딩 증가 */
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
             z-index: 3;
             text-align: center;
-            font-size: 24px;
+            font-size: 30px; /* 글자 크기 증가 */
             font-family: 'DNFBitBitv2', sans-serif;
             animation: pulse 1s infinite; /* 크기 변화 애니메이션 */
         }
@@ -255,11 +256,11 @@
         }
 
         .button-bg-music {
-            width: 90px; /* 버튼 너비 줄임 */
-            padding: 5px;
-            margin: 5px 0;
+            width: 120px; /* 버튼 너비 증가 */
+            padding: 10px; /* 패딩 증가 */
+            margin: 10px 0; /* 간격 증가 */
             font-family: 'DNFBitBitv2', sans-serif;
-            font-size: 14px;
+            font-size: 18px; /* 글자 크기 증가 */
             cursor: pointer;
             border: none;
             border-radius: 5px;
@@ -273,11 +274,11 @@
         }
 
         .stop-button {
-            width: 90px;
-            padding: 5px;
-            margin: 5px 0;
+            width: 120px; /* 버튼 너비 증가 */
+            padding: 10px; /* 패딩 증가 */
+            margin: 10px 0; /* 간격 증가 */
             font-family: 'DNFBitBitv2', sans-serif;
-            font-size: 14px;
+            font-size: 18px; /* 글자 크기 증가 */
             cursor: pointer;
             border: none;
             border-radius: 5px;
@@ -523,7 +524,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://raw.githubusercontent.com/yunrang2/umjiMS/main/엄지님 미션판.png" alt="Top Left Image" class="top-left">
+        <img src="https://raw.githubusercontent.com/yunrang2/upload/master/엄지님 미션판.png" alt="Top Left Image" class="top-left">
         <img src="https://raw.githubusercontent.com/yunrang2/upload/master/엄지배너.gif" alt="Bottom Left Image" class="bottom-left" onclick="toggleMissionImage()">
         <div class="buttons">
             <div class="timer-buttons">
