@@ -3,28 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>노래신청 모달창</title>
+    <title>댄스 모드</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js" defer></script>
+    <script defer src="scripts.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div id="missionContainer" class="mission-container"></div>
-        <img src="https://raw.githubusercontent.com/yunrang2/upload/master/엄지배너.gif" alt="Bottom Left Image" class="bottom-left" onclick="showModal('missionModal')">
-        <div class="buttons">
-            <button class="button reaction-button" onclick="showReactionModal()">리액션</button>
-            <div class="timer-buttons">
-                <button id="pauseResumeBtn" class="button pause-button" onclick="pauseOrResumeTimer()" style="display: none;">중지</button>
-                <button class="button" onclick="addTime()">타이머</button>
-            </div>
-            <button class="button" onclick="showModal('bgMusicModal')">브금</button>
-            <button class="button" onclick="showModal('songRequestModal')">노래신청</button>
+    <div class="buttons">
+        <button class="button reaction-button" onclick="showModal('reactionModal')">리액션</button>
+        <button class="button" onclick="showModal('bgMusicModal')">브금</button>
+        <button class="button" onclick="showModal('songRequestModal')">노래신청</button>
+        <div class="timer-buttons">
+            <button id="pauseResumeBtn" class="button pause-button" onclick="pauseOrResumeTimer()" style="display: none;">중지</button>
+            <button class="button" onclick="addTime()">타이머</button>
         </div>
     </div>
 
     <!-- 브금 모달 창 -->
-    <div id="bgMusicModal" class="modal" style="left: auto; right: 120px; top: auto; bottom: 50px;">
-        <span class="close" onclick="closeModal('bgMusicModal')">&times;</span>
+    <div id="bgMusicModal" class="modal" style="left: auto; right: 220px; top: auto; bottom: 120px;">
+        <div class="modal-header">
+            <span class="close" onclick="closeModal('bgMusicModal')">&times;</span>
+        </div>
         <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/섹시.mp3')">섹시</button>
         <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/불쌍.mp3')">불쌍</button>
         <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/멸망.mp3')">멸망</button>
@@ -34,7 +32,7 @@
     </div>
 
     <!-- 노래 신청 모달 창 -->
-    <div id="songRequestModal" class="modal" style="right: 0; top: 0; width: 400px;">
+    <div id="songRequestModal" class="modal" style="right: 20px; top: 20px; width: 400px;">
         <div class="modal-header">
             <button class="clear-button" onclick="clearSongList()">클리어</button>
             <span class="title">신청리스트</span>
@@ -64,57 +62,14 @@
         </div>
     </div>
 
-    <!-- 미션 모달 창 -->
-    <div id="missionModal" class="modal">
-        <div class="modal-header">
-            <span class="title">미션 설정</span>
-        </div>
-        <table id="missionTable">
-            <thead>
-                <tr>
-                    <th ondblclick="editColor(this)">콘</th>
-                    <th ondblclick="editColor(this)">미션</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td contenteditable="true" class="kon-cell"></td>
-                    <td contenteditable="true" class="mission-cell"></td>
-                    <td>
-                        <button class="add-button" onclick="addMission()">+</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="button-container">
-            <button class="button" onclick="clearMissions()">클리어</button>
-            <button class="button" onclick="saveMissions()">저장하기</button>
-        </div>
-    </div>
-
     <!-- 타이머 모달 -->
     <div id="timerModal" class="timer-modal" onclick="hideTimer()">
         <div id="timerDisplay">30 초</div>
     </div>
 
-    <!-- 색상 선택 모달 -->
-    <div id="colorPickerModal" class="modal">
-        <div class="modal-header">
-            <span class="title">색상 선택</span>
-        </div>
-        <input type="color" id="colorPicker">
-        <div class="button-container">
-            <button class="button" onclick="applyColor()">적용</button>
-            <button class="button" onclick="closeModal('colorPickerModal')">취소</button>
-        </div>
-    </div>
-
     <!-- 내용 및 색상 편집 모달 -->
     <div id="editModal" class="modal edit-modal">
-        <div class="modal-header">
-            <span class="title">내용 및 색상 편집</span>
-        </div>
+        <span class="title">내용 및 색상 편집</span>
         <input type="text" id="editInput">
         <input type="color" id="editColorPicker">
         <div class="button-container">
@@ -124,7 +79,7 @@
     </div>
 
     <!-- 리액션 모달 창 -->
-    <div id="reactionModal" class="modal reaction-modal">
+    <div id="reactionModal" class="modal" style="left: auto; right: 220px; top: auto; bottom: 200px;">
         <span class="close" onclick="closeModal('reactionModal')">&times;</span>
         <button class="button-reaction" onclick="startDance()">우유댄스</button>
         <button class="button-reaction" onclick="startDanceAnka()">앙카댄스</button>
@@ -139,6 +94,5 @@
             <button id="returnButton" class="button" onclick="returnToMain()">돌아가기</button>
         </div>
     </div>
-
 </body>
 </html>
